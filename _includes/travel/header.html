@@ -1,0 +1,66 @@
+<nav class="site-nav" aria-label="Main Menu">
+    <div class="inner">
+        <button id="menu-toggle" class="menu-toggle" aria-expanded="false">
+            <span class="icon-menu" aria-hidden="true"></span> Menu
+        </button>
+        <div id="nav-menu" class="nav-menu">
+            <div class="logo-text"><a href="/">Minh TO</a></div>
+            <ul class="menu">
+                {% for link in site.travel_navigation %} {% assign current = nil
+                %} {% if page.url == link.url %} {% assign current =
+                'nav-current' %} {% endif %}
+                <li class="{{ current }}">
+                    <a class="{{ current }}" href="{{ link.url }}"
+                        >{{ link.text }}</a
+                    >
+                </li>
+                {% endfor %}
+            </ul>
+
+            <div class="right">
+                <a id="search-open" class="search-toggle"
+                    ><i class="fa-search" aria-hidden="true"></i
+                    ><span class="screen-reader-text">Search</span></a
+                >
+                <div style="display: inline-block">
+                    <input type="checkbox" class="checkbox" id="checkbox" />
+                    <label for="checkbox" class="checkbox-label">
+                        <span>🌑</span>
+                        <span>☀️</span>
+                        <span class="ball"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- .inner -->
+</nav>
+<!-- .site-nav -->
+<header class="site-header fade-in-down delay-0_5s">
+    <div class="inner">
+        <div class="bubble">2025: lorem sulmkmkamkca</div>
+        <div
+            class="avatar"
+            style="
+                background-image: url(https://graph.facebook.com/100003382090912/picture?type=normal);
+            "
+        ></div>
+        <div class="site-info">
+            <div class="title">Minh is Trekking</div>
+            <div class="tagline">
+                🌲 Code by day, trails by heart — Developer fueled by adventure,
+                nature, and the wild outdoors. 🏃‍♂️💻
+            </div>
+        </div>
+    </div>
+    <!-- .inner -->
+</header>
+<script>
+    document.getElementById("checkbox");
+    checkbox.addEventListener("change", (e) => {
+        document.body.style.colorScheme = e.target.checked ? "dark" : "light";
+    });
+</script>
+<!-- .site-header -->
+
+{% include travel/search.html %}

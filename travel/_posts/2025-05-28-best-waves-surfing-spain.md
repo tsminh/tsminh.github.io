@@ -1,0 +1,9 @@
+---
+layout: travel/post
+title: "Chu Va 12"
+date: 2025-05-28
+featured_image: https://live.staticflickr.com/65535/54551201699_0af1f3ccda_h.jpg
+tags: [Trekking, Tây Bắc]
+---
+
+Update sau
