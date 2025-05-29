@@ -34,9 +34,35 @@ a {
     text-decoration: underline;
     -webkit-transition: 0.3s;
     transition: 0.3s;
+
     &:hover {
-        color: #aeb0b1;
+        color: white;
         text-decoration: none;
+    }
+}
+
+a[rel="tag"] {
+    position: relative;
+    z-index: 1;
+    &:before {
+        content: "";
+        position: absolute;
+        width: calc(100% + 4px);
+        height: 2px;
+        bottom: -2px;
+        left: -2px;
+        z-index: -1;
+        background-color: var(--color-primary);
+        transition: 0.2s ease all;
+    }
+
+    &:hover {
+        color: white;
+        text-decoration: none;
+
+        &::before {
+            height: 100%;
+        }
     }
 }
 
@@ -262,7 +288,7 @@ button,
 input[type="submit"],
 input[type="button"],
 input[type="reset"] {
-    background-color: $accent-color;
+    background-color: var(--color-primary);
     color: #fff;
     font-weight: bold;
     height: 40px;
@@ -795,6 +821,18 @@ a.post-thumbnail:hover img {
 .post-mto .entry-header {
     z-index: 2;
     position: relative;
+}
+
+.post .post-thumbnail {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    overflow: hidden;
+
+    img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
 }
 
 .post-mto .entry-header h2.entry-title a {

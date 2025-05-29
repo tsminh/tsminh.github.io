@@ -6,9 +6,9 @@
         <div id="nav-menu" class="nav-menu">
             <div class="logo-text"><a href="/">Minh TO</a></div>
             <ul class="menu">
-                {% for link in site.travel_navigation %} {% assign current = nil
-                %} {% if page.url == link.url %} {% assign current =
-                'nav-current' %} {% endif %}
+                {% for link in site.navigation %} {% assign current = nil %} {%
+                if page.url == link.url %} {% assign current = 'nav-current' %}
+                {% endif %}
                 <li class="{{ current }}">
                     <a class="{{ current }}" href="{{ link.url }}"
                         >{{ link.text }}</a
@@ -36,17 +36,20 @@
     <!-- .inner -->
 </nav>
 <!-- .site-nav -->
+{%if page.hide_header != true %}
 <header class="site-header fade-in-down delay-0_5s">
     <div class="inner">
-        <div class="bubble">2025: lorem sulmkmkamkca</div>
-        <div
-            class="avatar"
-            style="
-                background-image: url(https://graph.facebook.com/100003382090912/picture?type=normal);
-            "
-        ></div>
+        <div class="avatar-container">
+            <div class="bubble">2025: lorem sulmkmkamkca</div>
+            <div
+                class="avatar"
+                style="
+                    background-image: url(https://graph.facebook.com/100003382090912/picture?type=normal);
+                "
+            ></div>
+        </div>
         <div class="site-info">
-            <div class="title">Minh is Trekking</div>
+            <div class="title">{{ page.title }}</div>
             <div class="tagline">
                 🌲 Code by day, trails by heart — Developer fueled by adventure,
                 nature, and the wild outdoors. 🏃‍♂️💻
@@ -55,6 +58,8 @@
     </div>
     <!-- .inner -->
 </header>
+{% endif %}
+
 <script>
     document.getElementById("checkbox");
     checkbox.addEventListener("change", (e) => {
