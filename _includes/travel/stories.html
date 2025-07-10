@@ -1,0 +1,125 @@
+<div class="story-cta">
+    <img
+        src="https://live.staticflickr.com/65535/54551201699_0af1f3ccda_h.jpg"
+        alt="Chu Va 12"
+    />
+    <span>View as story</span>
+</div>
+<script>
+    document.querySelector(".story-cta").addEventListener("click", () => {
+        document.body.insertAdjacentHTML(
+            "afterEnd",
+            `
+<div class="me">
+    <div class="story-wrapper" onclick="document.querySelector('.me').remove();">
+        <div class="story">
+            <div class="story__slider swiper">
+                <div class="story__wrapper swiper-wrapper">
+                    {% for img in include.images %}
+                    <div class="story__slide swiper-slide">
+                        <img src="{{ img }}" />
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="story__next swiper-button-next"></div>
+                <div class="story__prev swiper-button-prev"></div>
+
+                <div class="story__pagination swiper-pagination"></div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+`,
+        );
+        initSlider();
+    });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/10.1.0/swiper-bundle.min.js"></script>
+<script src="https://unpkg.co/gsap@3/dist/gsap.min.js"></script>
+
+<script>
+    function initSlider() {
+        document.querySelector(".story").addEventListener("click", (e) => {
+            e.stopPropagation();
+        });
+        const slider = new Swiper(".story__slider", {
+            speed: 1,
+            watchSlidesProgress: true,
+            loop: false,
+            autoplay: {
+                delay: 15000,
+                disableOnInteraction: false,
+            },
+            slidesPerView: 1,
+            navigation: {
+                nextEl: ".story__next",
+                prevEl: ".story__prev",
+            },
+            pagination: {
+                el: ".story__pagination",
+                renderBullet: function (index, className) {
+                    return (
+                        '<div class="' +
+                        className +
+                        '"> <div class="swiper-pagination-progress"></div> </div>'
+                    );
+                },
+            },
+            on: {
+                autoplayTimeLeft(swiper, time, progress) {
+                    let currentSlide = document.querySelectorAll(
+                        ".story__slider .swiper-slide",
+                    )[swiper.activeIndex];
+                    let currentBullet = document.querySelectorAll(
+                        ".story__slider .swiper-pagination-progress",
+                    )[swiper.realIndex];
+                    let fullTime = currentSlide.dataset.swiperAutoplay
+                        ? parseInt(currentSlide.dataset.swiperAutoplay)
+                        : swiper.params.autoplay.delay;
+
+                    let percentage =
+                        Math.min(
+                            Math.max(
+                                parseFloat(
+                                    (
+                                        ((fullTime - time) * 100) /
+                                        fullTime
+                                    ).toFixed(1),
+                                ),
+                                0,
+                            ),
+                            100,
+                        ) + "%";
+
+                    gsap.set(currentBullet, { width: percentage });
+                },
+                transitionEnd(swiper) {
+                    let allBullets = $(
+                        ".story__slider .swiper-pagination-progress",
+                    );
+                    let bulletsBefore = allBullets.slice(0, swiper.realIndex);
+                    let bulletsAfter = allBullets.slice(
+                        swiper.realIndex,
+                        allBullets.length,
+                    );
+                    if (bulletsBefore.length) {
+                        gsap.set(bulletsBefore, { width: "100%" });
+                    }
+                    if (bulletsAfter.length) {
+                        gsap.set(bulletsAfter, { width: "0%" });
+                    }
+
+                    let activeSlide = document.querySelectorAll(
+                        ".story__slider .swiper-slide",
+                    )[swiper.realIndex];
+                    if (activeSlide.querySelector("video")) {
+                        activeSlide.querySelector("video").currentTime = 0;
+                    }
+                },
+            },
+        });
+    }
+</script>
